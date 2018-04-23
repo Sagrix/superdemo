@@ -1,2 +1,2 @@
-# website
-Info about Sagrix - https://www.sagrix.com
+# superdemo
+Sagrix demo for [EDCON 2018](https://edcon.io) - https://www.sagrix.com
