@@ -1,8 +1,8 @@
 pragma solidity ^0.4.2;
 
-import './zeppelin/lifecycle/Killable.sol';
+import "./zeppelin/lifecycle/Destructible.sol";
 
-contract Authentication is Killable {
+contract Authentication is Destructible {
   struct User {
     bytes32 name;
   }
@@ -44,9 +44,9 @@ contract Authentication is Killable {
 
     if (users[msg.sender].name == 0x0)
     {
-        users[msg.sender].name = name;
+      users[msg.sender].name = name;
 
-        return (users[msg.sender].name);
+      return (users[msg.sender].name);
     }
 
     return (users[msg.sender].name);
@@ -62,9 +62,9 @@ contract Authentication is Killable {
 
     if (users[msg.sender].name != 0x0)
     {
-        users[msg.sender].name = name;
+      users[msg.sender].name = name;
 
-        return (users[msg.sender].name);
+      return (users[msg.sender].name);
     }
   }
 }
