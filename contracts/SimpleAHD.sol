@@ -20,8 +20,8 @@ contract SimpleAHD {
   event AddedToCircle(address patient, address substitute);
   event RemovedFromCircle(address patient, address substitute);
   event UpdatedPreference(address patient, bytes32 question, bool answer); // for demo purposes
-  event GrantedDataAccess(address patient, address other, uint duration);
-  event ModifiedDataAccess(address patient, address other, uint duration);
+  event GrantedDataAccess(address patient, address other, uint end);
+  event ModifiedDataAccess(address patient, address other, uint end);
   event RevokedDataAccess(address patient, address other);
   event ViewedPreferences(address patient, address other);
 
@@ -36,7 +36,7 @@ contract SimpleAHD {
   }
 
   modifier onlyGranted(address other) {
-    require(patients[other].accessTime[msg.sender] > 0);
+    require(patients[other].accessTime[msg.sender] > now);
     _;
   }
 
@@ -60,17 +60,23 @@ contract SimpleAHD {
     patients[msg.sender].requiredVotes = numVotes;
   }
 
-  function addToCircle(address name) public onlyRegistered returns(bool) {
-    if (patients[msg.sender].circle[name] == true) return false;
-    patients[msg.sender].circle[name] = true;
-    emit AddedToCircle(msg.sender, name);
+  function getRequiredVotes() public view onlyRegistered returns(uint) {
+    return patients[msg.sender].requiredVotes;
+  }
+
+  function addToCircle(address other) public onlyRegistered returns(bool) {
+    require(isRegistered(other));
+    require(patients[msg.sender].circle[other] == false);
+    patients[msg.sender].circle[other] = true;
+    emit AddedToCircle(msg.sender, other);
     return true;
   }
 
-  function removeFromCircle(address name) public onlyRegistered returns(bool) {
-    if (patients[msg.sender].circle[name] == false) return false;
-    patients[msg.sender].circle[name] = false;
-    emit RemovedFromCircle(msg.sender, name);
+  function removeFromCircle(address other) public onlyRegistered returns(bool) {
+    require(isRegistered(other));
+    require(patients[msg.sender].circle[other] == true);
+    patients[msg.sender].circle[other] = false;
+    emit RemovedFromCircle(msg.sender, other);
     return true;
   }
 
@@ -81,18 +87,18 @@ contract SimpleAHD {
     return true;
   }
 
-  function grantDataAccess(address other, uint duration) public onlyRegistered onlyRegistered returns(bool) {
-    if (patients[msg.sender].accessTime[other] == duration) return false;
-    patients[msg.sender].accessTime[other] = duration;
-    emit GrantedDataAccess(msg.sender, other, duration);
+  function grantDataAccess(address other, uint endTime) public onlyRegistered onlyRegistered returns(bool) {
+    if (patients[msg.sender].accessTime[other] == endTime) return false;
+    patients[msg.sender].accessTime[other] = endTime;
+    emit GrantedDataAccess(msg.sender, other, endTime);
     return true;
   }
 
-  function modifyDataAccess(address other, uint duration) public onlyRegistered returns(bool) {
+  function modifyDataAccess(address other, uint endTime) public onlyRegistered returns(bool) {
     if (patients[msg.sender].accessTime[other] == 0) return false;
-    if (patients[msg.sender].accessTime[other] == duration) return false;
-    patients[msg.sender].accessTime[other] = duration;
-    emit ModifiedDataAccess(msg.sender, other, duration);
+    if (patients[msg.sender].accessTime[other] == endTime) return false;
+    patients[msg.sender].accessTime[other] = endTime;
+    emit ModifiedDataAccess(msg.sender, other, endTime);
     return true;
   }
 
@@ -103,16 +109,16 @@ contract SimpleAHD {
     return true;
   }
 
-  function grantDataAccessAsProxy(address other, address requester, uint duration) 
+  function grantDataAccessAsProxy(address other, address requester, uint endTime) 
   public onlyRegistered onlySubstitutes(other) {
-    patients[other].accessTime[requester] = duration;
-    emit GrantedDataAccess(msg.sender, requester, duration);
+    patients[other].accessTime[requester] = endTime;
+    emit GrantedDataAccess(msg.sender, requester, endTime);
   }
 
-  function modifyDataAccessAsProxy(address other, address requester, uint duration)
+  function modifyDataAccessAsProxy(address other, address requester, uint endTime)
   public onlyRegistered onlySubstitutes(other) {
-    patients[other].accessTime[requester] = duration;
-    emit ModifiedDataAccess(msg.sender, requester, duration);
+    patients[other].accessTime[requester] = endTime;
+    emit ModifiedDataAccess(msg.sender, requester, endTime);
   }
 
   function revokeDataAccessAsProxy(address other, address requester)
