@@ -6,7 +6,6 @@ pragma solidity ^0.4.23;
 contract SimpleAHD {
 
   struct Patient {
-    uint id;
     bytes32 name;
     uint requiredVotes;
     bytes32[] preferenceIndex;
@@ -15,10 +14,9 @@ contract SimpleAHD {
     mapping(address => uint) accessTime;
   }
 
-  mapping(address => Patient) private patients;
-  address[] private patientIndex; 
+  mapping(address => Patient) patients;
 
-  event PatientRegistered(address patient, uint patientID);
+  event PatientRegistered(address patient);
   event AddedToCircle(address patient, address substitute);
   event RemovedFromCircle(address patient, address substitute);
   event UpdatedPreference(address patient, bytes32 question, bool answer); // for demo purposes
@@ -46,16 +44,16 @@ contract SimpleAHD {
   constructor() public {}
 
   function register(bytes32 name) public returns(bool) {
-    if (isRegistered(msg.sender)) return false;
+    if (isRegistered(msg.sender) == true) return false;
     patients[msg.sender].name = name;
-    patients[msg.sender].id = patientIndex.push(msg.sender)-1;
-    emit PatientRegistered(msg.sender, patients[msg.sender].id);
+    patients[msg.sender].circle[msg.sender] = true;
+    emit PatientRegistered(msg.sender);
     return true;
   }
 
   function isRegistered(address patient) public view returns(bool) {
-    require(patientIndex.length > 0);
-    return (patientIndex[patients[patient].id] == patient);
+    if (patients[patient].circle[patient] == true) return true;
+    return false;
   }
 
   function setRequiredVotes(uint numVotes) public onlyRegistered {
@@ -123,10 +121,16 @@ contract SimpleAHD {
     emit RevokedDataAccess(msg.sender, requester);
   }
 
-  /*function viewPreferences(address other)
+  function viewAllPreferences(address other)
   public onlyRegistered onlyGranted(other) returns(bytes32[]) {
     emit ViewedPreferences(msg.sender, other);
-    return patients[other].preferences;
-  }*/
+    return patients[other].preferenceIndex;
+  }
+
+  function viewPreference(address other, bytes32 question)
+  public onlyRegistered onlyGranted(other) returns(bool) {
+    emit ViewedPreferences(msg.sender, other);
+    return patients[other].preferences[question];
+  }
 
 }
