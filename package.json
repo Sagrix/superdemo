@@ -62,7 +62,7 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "truffle": "truffle compile && truffle migrate",
-    "truffle-reset": "rm -rf build/contracts && truffle compile && truffle migrate --reset"
+    "truffle-fresh": "rm -rf build/contracts && truffle compile && truffle migrate --reset"
   },
   "jest": {
     "collectCoverageFrom": [
