@@ -81,13 +81,36 @@ contract SimpleAHD {
   }
 
   function updatePreference(bytes32 question, bool answer) public onlyRegistered returns(bool) {
+    require(patients[msg.sender].preferences[question] != answer);
     patients[msg.sender].preferences[question] = answer;
     patients[msg.sender].preferenceIndex.push(question);
     emit UpdatedPreference(msg.sender, question, answer);
     return true;
   }
 
-  function grantDataAccess(address other, uint endTime) public onlyRegistered onlyRegistered returns(bool) {
+  function viewOwnPreference(bytes32 question) public onlyRegistered returns(bool) {
+    emit ViewedPreferences(msg.sender, msg.sender);
+    return patients[msg.sender].preferences[question];
+  }
+
+  function viewAllOwnPreferences() public onlyRegistered returns(bytes32[]) {
+    emit ViewedPreferences(msg.sender, msg.sender);
+    return patients[msg.sender].preferenceIndex;
+  }
+
+  function viewProxyPreference(address other, bytes32 question)
+  public onlyRegistered onlyGranted(other) returns(bool) {
+    emit ViewedPreferences(msg.sender, other);
+    return patients[other].preferences[question];
+  }
+
+  function viewAllProxyPreferences(address other)
+  public onlyRegistered onlyGranted(other) returns(bytes32[]) {
+    emit ViewedPreferences(msg.sender, other);
+    return patients[other].preferenceIndex;
+  }
+
+  function grantDataAccess(address other, uint endTime) public onlyRegistered returns(bool) {
     if (patients[msg.sender].accessTime[other] == endTime) return false;
     patients[msg.sender].accessTime[other] = endTime;
     emit GrantedDataAccess(msg.sender, other, endTime);
@@ -125,18 +148,6 @@ contract SimpleAHD {
   public onlyRegistered onlySubstitutes(other) {
     patients[other].accessTime[requester] = 0;
     emit RevokedDataAccess(msg.sender, requester);
-  }
-
-  function viewAllPreferences(address other)
-  public onlyRegistered onlyGranted(other) returns(bytes32[]) {
-    emit ViewedPreferences(msg.sender, other);
-    return patients[other].preferenceIndex;
-  }
-
-  function viewPreference(address other, bytes32 question)
-  public onlyRegistered onlyGranted(other) returns(bool) {
-    emit ViewedPreferences(msg.sender, other);
-    return patients[other].preferences[question];
   }
 
 }
