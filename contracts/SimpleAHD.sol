@@ -80,7 +80,7 @@ contract SimpleAHD {
   }
 
   function updatePreference(bytes32 question, bool answer) public onlyRegistered returns(bool) {
-    require(patients[msg.sender].preferences[question] != answer);
+    // require(patients[msg.sender].preferences[question] != answer);
     patients[msg.sender].preferences[question] = answer;
     patients[msg.sender].preferenceIndex.push(question);
     emit UpdatedPreference(msg.sender, question, answer);
@@ -99,17 +99,20 @@ contract SimpleAHD {
 
   function viewProxyPreference(address other, bytes32 question)
   public onlyRegistered onlyGranted(other) returns(bool) {
+    require(isRegistered(other));
     emit ViewedPreferences(msg.sender, other);
     return patients[other].preferences[question];
   }
 
   function viewAllProxyPreferences(address other)
   public onlyRegistered onlyGranted(other) returns(bytes32[]) {
+    require(isRegistered(other));
     emit ViewedPreferences(msg.sender, other);
     return patients[other].preferenceIndex;
   }
 
   function grantDataAccess(address other, uint endTime) public onlyRegistered returns(bool) {
+    require(isRegistered(other));
     if (patients[msg.sender].accessTime[other] == endTime) return false;
     patients[msg.sender].accessTime[other] = endTime;
     emit GrantedDataAccess(msg.sender, other, endTime);
@@ -117,6 +120,7 @@ contract SimpleAHD {
   }
 
   function revokeDataAccess(address other) public onlyRegistered returns(bool) {
+    require(isRegistered(other));
     if (patients[msg.sender].accessTime[other] == 0) return false;
     patients[msg.sender].accessTime[other] = 0;
     emit RevokedDataAccess(msg.sender, other);
@@ -125,12 +129,14 @@ contract SimpleAHD {
 
   function grantDataAccessAsProxy(address other, address requester, uint endTime) 
   public onlyRegistered onlySubstitutes(other) {
+    require(isRegistered(other));
     patients[other].accessTime[requester] = endTime;
     emit GrantedDataAccess(msg.sender, requester, endTime);
   }
 
   function revokeDataAccessAsProxy(address other, address requester)
   public onlyRegistered onlySubstitutes(other) {
+    require(isRegistered(other));
     patients[other].accessTime[requester] = 0;
     emit RevokedDataAccess(msg.sender, requester);
   }
