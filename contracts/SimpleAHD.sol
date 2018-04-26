@@ -19,9 +19,8 @@ contract SimpleAHD {
   event PatientRegistered(address patient);
   event AddedToCircle(address patient, address substitute);
   event RemovedFromCircle(address patient, address substitute);
-  event UpdatedPreference(address patient, bytes32 question, bool answer); // for demo purposes
+  event UpdatedPreference(address patient, bytes32 question, bool answer);
   event GrantedDataAccess(address patient, address other, uint end);
-  event ModifiedDataAccess(address patient, address other, uint end);
   event RevokedDataAccess(address patient, address other);
   event ViewedPreferences(address patient, address other);
 
@@ -117,14 +116,6 @@ contract SimpleAHD {
     return true;
   }
 
-  function modifyDataAccess(address other, uint endTime) public onlyRegistered returns(bool) {
-    if (patients[msg.sender].accessTime[other] == 0) return false;
-    if (patients[msg.sender].accessTime[other] == endTime) return false;
-    patients[msg.sender].accessTime[other] = endTime;
-    emit ModifiedDataAccess(msg.sender, other, endTime);
-    return true;
-  }
-
   function revokeDataAccess(address other) public onlyRegistered returns(bool) {
     if (patients[msg.sender].accessTime[other] == 0) return false;
     patients[msg.sender].accessTime[other] = 0;
@@ -136,12 +127,6 @@ contract SimpleAHD {
   public onlyRegistered onlySubstitutes(other) {
     patients[other].accessTime[requester] = endTime;
     emit GrantedDataAccess(msg.sender, requester, endTime);
-  }
-
-  function modifyDataAccessAsProxy(address other, address requester, uint endTime)
-  public onlyRegistered onlySubstitutes(other) {
-    patients[other].accessTime[requester] = endTime;
-    emit ModifiedDataAccess(msg.sender, requester, endTime);
   }
 
   function revokeDataAccessAsProxy(address other, address requester)
