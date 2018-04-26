@@ -87,24 +87,24 @@ contract SimpleAHD {
     return true;
   }
 
-  function viewOwnPreference(bytes32 question) public onlyRegistered returns(bool) {
+  function viewPreference(bytes32 question) public onlyRegistered returns(bool) {
     emit ViewedPreferences(msg.sender, msg.sender);
     return patients[msg.sender].preferences[question];
   }
 
-  function viewAllOwnPreferences() public onlyRegistered returns(bytes32[]) {
+  function viewAllPreferences() public onlyRegistered returns(bytes32[]) {
     emit ViewedPreferences(msg.sender, msg.sender);
     return patients[msg.sender].preferenceIndex;
   }
 
-  function viewProxyPreference(address other, bytes32 question)
+  function viewPreferenceAsProxy(address other, bytes32 question)
   public onlyRegistered onlyGranted(other) returns(bool) {
     require(isRegistered(other));
     emit ViewedPreferences(msg.sender, other);
     return patients[other].preferences[question];
   }
 
-  function viewAllProxyPreferences(address other)
+  function viewAllPreferencesAsProxy(address other)
   public onlyRegistered onlyGranted(other) returns(bytes32[]) {
     require(isRegistered(other));
     emit ViewedPreferences(msg.sender, other);
