@@ -39,27 +39,27 @@ class App extends Component {
         <Menu.Item key="1">
           <Icon type="home" />
           <span>Home</span>
-          <Link to="/">Home</Link>
+          <Link to="/"></Link>
         </Menu.Item>
         <Menu.Item key="2">
           <Icon type="dashboard" />
           <span>Dashboard</span>
-          <Link to="/dashboard">Dashboard</Link>
+          <Link to="/dashboard"></Link>
         </Menu.Item>
         <Menu.Item key="3">
           <Icon type="team" />
           <span>Circles</span>
-          {/* <Link to="/circles">Circles</Link> */}
+          {/* <Link to="/circles"></Link> */}
         </Menu.Item>
         <Menu.Item key="4">
           <Icon type="unlock" />
           <span>Data Grants</span>
-          {/* <Link to="/data-grants">Data Grants</Link> */}
+          {/* <Link to="/data-grants"> </Link> */}
         </Menu.Item>
         <Menu.Item key="5">
           <Icon type="pie-chart" />
           <span>Provenance</span>
-          {/* <Link to="/provenance">Provenance</Link> */}
+          {/* <Link to="/provenance"></Link> */}
         </Menu.Item>
         <Menu.Item key="6">
           <Icon type="logout" />
@@ -79,16 +79,16 @@ class App extends Component {
         <Menu.Item key="1">
           <Icon type="home" />
           <span>Home</span>
-          <Link to="/">Home</Link>
+          <Link to="/"></Link>
         </Menu.Item>
         <Menu.Item key="2">
           <Icon type="safety" />
           <span>Register</span>
-          <Link to="/signup">Register</Link>
+          <Link to="/signup"></Link>
         </Menu.Item>
         <Menu.Item key="3">
           <Icon type="login" />
-          <span>Login</span>
+          <span>Sign in</span>
           <LoginButtonContainer />
         </Menu.Item>
      </Menu>
