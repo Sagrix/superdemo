@@ -10,6 +10,7 @@ import getWeb3 from './util/web3/getWeb3'
 import App from './App'
 import Home from './layouts/home/Home'
 import Dashboard from './layouts/dashboard/Dashboard'
+import Preferences from './layouts/preferences/Preferences'
 import Circles from './layouts/circles/Circles'
 import DataGrants from './layouts/data-grants/DataGrants'
 import Provenance from './layouts/provenance/Provenance'
@@ -37,6 +38,7 @@ ReactDOM.render((
         <Route path="/" component={App}>
           <IndexRoute component={Home} />
           <Route path="dashboard" component={UserIsAuthenticated(Dashboard)} />
+          <Route path="preferences" component={UserIsAuthenticated(Preferences)} />
           <Route path="circles" component={UserIsAuthenticated(Circles)} />
           <Route path="data-grants" component={UserIsAuthenticated(DataGrants)} />
           <Route path="provenance" component={UserIsAuthenticated(Provenance)} />
