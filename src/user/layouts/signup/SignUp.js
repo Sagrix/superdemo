@@ -1,18 +1,17 @@
 import React, { Component } from 'react'
 import SignUpFormContainer from '../../ui/signupform/SignUpFormContainer'
+import { Row, Col } from 'antd'
 
 class SignUp extends Component {
   render() {
     return(
-      <main className="container">
-        <div className="pure-g">
-          <div className="pure-u-1-1">
-            <h1>Sign Up</h1>
-            <p>We've got your wallet information, simply input your name and your account is made!</p>
-            <SignUpFormContainer />
-          </div>
-        </div>
-      </main>
+      <Row justify="center">
+        <Col span={12} offset={6}>
+          <h1>Sign Up</h1>
+          <p>We've got your wallet information, simply input your full name to create an account. No passwords needed here!</p>
+          <SignUpFormContainer />
+        </Col>
+      </Row>
     )
   }
 }

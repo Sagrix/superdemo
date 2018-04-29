@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
+import { Form, Icon, Input, Button } from 'antd'
+const FormItem = Form.Item;
 
-class SignUpForm extends Component {
+
+class SignUpFormComponent extends Component {
   constructor(props) {
     super(props)
 
@@ -26,19 +29,25 @@ class SignUpForm extends Component {
 
   render() {
     return(
-      <form className="pure-form pure-form-stacked" onSubmit={this.handleSubmit.bind(this)}>
-        <fieldset>
-          <label htmlFor="name">Name</label>
-          <input id="name" type="text" value={this.state.name} onChange={this.onInputChange.bind(this)} placeholder="Name" />
+      <Form onSubmit={this.handleSubmit.bind(this)}>
+        <FormItem>
+          <Input
+            id="name" type="text"
+            prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="e.g Sir Toshi"
+            value={this.state.name} onChange={this.onInputChange.bind(this)}
+          />
           <span className="pure-form-message">This is a required field.</span>
-
-          <br />
-
-          <button type="submit" className="pure-button pure-button-primary">Sign Up</button>
-        </fieldset>
-      </form>
+        </FormItem>
+        <FormItem>
+          <Button type="primary" htmlType="submit" className="login-form-button">
+            Sign up
+          </Button>
+        </FormItem>
+      </Form>
     )
   }
 }
+
+const SignUpForm = Form.create()(SignUpFormComponent)
 
 export default SignUpForm

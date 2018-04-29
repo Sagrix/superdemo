@@ -1,4 +1,5 @@
 import AuthenticationContract from '../../../../build/contracts/Authentication.json'
+import SimpleAHDContract from '../../../../build/contracts/SimpleAHD.json'
 import { loginUser } from '../loginbutton/LoginButtonActions'
 import store from '../../../store'
 
@@ -19,6 +20,11 @@ export function signUpUser(name) {
       var authenticationInstance
 
       // Get current ethereum wallet.
+
+      const simpleAHD = contract(SimpleAHDContract)
+      simpleAHD.setProvider(web3.currentProvider)
+      let simpleAHDInstance
+
       web3.eth.getCoinbase((error, coinbase) => {
         // Log errors, if any.
         if (error) {
@@ -32,12 +38,37 @@ export function signUpUser(name) {
           authenticationInstance.signup(name, {from: coinbase})
           .then(function(result) {
             // If no error, login user.
-            return dispatch(loginUser())
+            // console.log(JSON.stringify(result) + " has now signed up")
+
           })
           .catch(function(result) {
             // If error...
+            console.log(result)
           })
         })
+
+      })
+
+      web3.eth.getCoinbase((error, coinbase) => {
+        // Log errors, if any.
+        if (error) {
+          console.error(error);
+        }
+  
+
+        simpleAHD.deployed().then(function(instance) {
+          simpleAHDInstance = instance
+
+          simpleAHDInstance.register(name, {from: coinbase})
+          .then((result) => {
+            console.log(result)
+            console.log("user has also been registered within SimpleAHD")
+
+            return dispatch(loginUser())
+
+          })
+        })
+
       })
     }
   } else {

@@ -34,7 +34,7 @@ class App extends Component {
         theme="dark"
         mode="inline"
         defaultSelectedKeys={['1']}
-        style={{ lineHeight: '64px' }}
+        style={{ lineHeight: '40px' }}
       >
         <Menu.Item key="1">
           <Icon type="home" />
@@ -74,7 +74,7 @@ class App extends Component {
         theme="dark"
         mode="inline"
         defaultSelectedKeys={['1']}
-        style={{ lineHeight: '64px' }}
+        style={{ lineHeight: '40px' }}
       >
         <Menu.Item key="1">
           <Icon type="home" />
@@ -108,10 +108,10 @@ class App extends Component {
         <Layout>
           <Header style={{ background: '#fff', padding: 0 }}>
             <Icon
-                className="trigger"
-                type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-                onClick={this.toggle}
-              />
+              className="trigger"
+              type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
+              onClick={this.toggle}
+            />
           </ Header>
           <Content style={{ margin: '24px 16px 0' }}>
             <div style={{ padding: 24, background: '#fff', minHeight: 450 }}>
