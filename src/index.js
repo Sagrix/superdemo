@@ -10,6 +10,9 @@ import getWeb3 from './util/web3/getWeb3'
 import App from './App'
 import Home from './layouts/home/Home'
 import Dashboard from './layouts/dashboard/Dashboard'
+import Circles from './layouts/circles/Circles'
+import DataGrants from './layouts/data-grants/DataGrants'
+import Provenance from './layouts/provenance/Provenance'
 import SignUp from './user/layouts/signup/SignUp'
 import Profile from './user/layouts/profile/Profile'
 
@@ -34,6 +37,9 @@ ReactDOM.render((
         <Route path="/" component={App}>
           <IndexRoute component={Home} />
           <Route path="dashboard" component={UserIsAuthenticated(Dashboard)} />
+          <Route path="circles" component={UserIsAuthenticated(Circles)} />
+          <Route path="data-grants" component={UserIsAuthenticated(DataGrants)} />
+          <Route path="provenance" component={UserIsAuthenticated(Provenance)} />
           <Route path="signup" component={UserIsNotAuthenticated(SignUp)} />
           <Route path="profile" component={UserIsAuthenticated(Profile)} />
         </Route>

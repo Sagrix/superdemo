@@ -49,17 +49,17 @@ class App extends Component {
         <Menu.Item key="3">
           <Icon type="team" />
           <span>Circles</span>
-          {/* <Link to="/circles"></Link> */}
+          <Link to="/circles"></Link>
         </Menu.Item>
         <Menu.Item key="4">
           <Icon type="unlock" />
           <span>Data Grants</span>
-          {/* <Link to="/data-grants"> </Link> */}
+          <Link to="/data-grants"> </Link>
         </Menu.Item>
         <Menu.Item key="5">
           <Icon type="pie-chart" />
           <span>Provenance</span>
-          {/* <Link to="/provenance"></Link> */}
+          <Link to="/provenance"></Link>
         </Menu.Item>
         <Menu.Item key="6">
           <Icon type="logout" />
