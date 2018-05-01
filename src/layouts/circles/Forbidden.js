@@ -7,7 +7,7 @@ import EditableCell from './EditableCell'
 // const contract = require('truffle-contract')
 
 
-class MyCircle extends Component {
+class Forbidden extends Component {
 
   constructor(props, { authData }) {
     super(props)
@@ -104,8 +104,8 @@ class MyCircle extends Component {
     const columns = this.columns;
     return(
       <div>
-        <h1>My Circle</h1>
-        <h4>People you trust as substitute decision makers of your health care choices and data.</h4>  
+        <h1>Forbidden Individuals</h1>
+        <h4>People you do not want to make health care decisions and/or grant access to your data on your behalf.</h4>  
         <Button className="editable-add-btn" onClick={this.handleAdd}>Add</Button>
         <br/><br/>
         <Table bordered dataSource={dataSource} columns={columns} />
@@ -115,4 +115,4 @@ class MyCircle extends Component {
 
 }
 
-export default MyCircle
+export default Forbidden
