@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import { Row, Col } from 'antd'
 
+import AccessGranted from './AccessGranted'
+// import AccessExpired from './AccessExpired'
+// import AccessRevoked from './AccessRevoked'
+
 
 class DataGrants extends Component {
 
@@ -11,10 +15,25 @@ class DataGrants extends Component {
 
   render() {
     return(
-      <Row>
-        <Col>Data</Col>
-        <Col>Grants</Col>
-      </Row>
+      <div>
+        <Row>
+          <Col span={12} offset={6}>
+            <AccessGranted />
+          </Col>
+        </Row>
+        
+        {/* <Row>
+          <Col span={12} offset={6}>
+            <AccessExpired />
+          </Col>
+        </Row>
+        
+        <Row>
+          <Col span={12} offset={6}>
+            <AccessRevoked />
+          </Col>
+        </Row> */}
+      </div>
     )
   }
 
