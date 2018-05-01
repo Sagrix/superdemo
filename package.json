@@ -50,6 +50,7 @@
   "dependencies": {
     "antd": "^3.4.3",
     "ganache-cli": "^6.1.0",
+    "moment": "^2.22.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",
