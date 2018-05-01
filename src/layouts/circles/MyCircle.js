@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Table, Button, Popconfirm } from 'antd'
 import EditableCell from './EditableCell'
+import CircleModal from '../../user/ui/inputmodals/CircleModal'
 
 // import SimpleAHDContract from '../../../build/contracts/SimpleAHD.json'
 // import store from '../../store'
@@ -86,6 +87,7 @@ class MyCircle extends Component {
   }
 
   handleAdd = () => {
+    // return (<CircleModal />);
     const { count, dataSource } = this.state;
     const newData = {
       key: count,
