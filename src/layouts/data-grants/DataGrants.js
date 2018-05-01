@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Row, Col } from 'antd'
+import { Tabs, Icon } from 'antd'
+const TabPane = Tabs.TabPane;
 
 import AccessGranted from './AccessGranted'
-// import AccessExpired from './AccessExpired'
-// import AccessRevoked from './AccessRevoked'
+import AccessExpired from './AccessExpired'
+import AccessRevoked from './AccessRevoked'
 
 
 class DataGrants extends Component {
@@ -16,23 +17,29 @@ class DataGrants extends Component {
   render() {
     return(
       <div>
-        <Row>
-          <Col span={12} offset={6}>
-            <AccessGranted />
-          </Col>
-        </Row>
-        
-        {/* <Row>
-          <Col span={12} offset={6}>
+        <h1>Circles</h1>
+        <Tabs defaultActiveKey="1">
+          <TabPane 
+            tab={<span><Icon type="clock-circle-o" />Active</span>} 
+            key="1"
+          >
+           <AccessGranted />
+          </TabPane>
+
+          <TabPane 
+            tab={<span><Icon type="clock-circle" />Expired</span>} 
+            key="2"
+          >
             <AccessExpired />
-          </Col>
-        </Row>
-        
-        <Row>
-          <Col span={12} offset={6}>
+          </TabPane>
+
+          <TabPane
+           tab={<span><Icon type="close-circle" />Revoked</span>} 
+           key="3"
+          >
             <AccessRevoked />
-          </Col>
-        </Row> */}
+          </TabPane>
+        </Tabs>
       </div>
     )
   }
