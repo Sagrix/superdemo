@@ -34,7 +34,7 @@ class MemberCircles extends Component {
       dataIndex: 'address',
     }, {
       title: 'Action',
-      dataIndex: 'operation',
+      dataIndex: 'action',
       render: (text, record) => {
         return (
           this.state.dataSource.length > 1 ?
