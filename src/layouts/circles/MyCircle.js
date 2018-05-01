@@ -106,7 +106,7 @@ class MyCircle extends Component {
     const columns = this.columns;
     return(
       <div>
-        <h4>People you trust as substitute decision makers of your health care choices and data.</h4>  
+        <h4>People you trust as substitute decision makers of your health care choices and data grants.</h4>  
         <Button className="editable-add-btn" onClick={this.handleAdd}>Add</Button>
         <br/><br/>
         <Table bordered dataSource={dataSource} columns={columns} />
