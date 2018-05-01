@@ -17,7 +17,7 @@ class DataGrants extends Component {
   render() {
     return(
       <div>
-        <h1>Circles</h1>
+        <h1>Data Grants</h1>
         <Tabs defaultActiveKey="1">
           <TabPane 
             tab={<span><Icon type="clock-circle-o" />Active</span>} 
