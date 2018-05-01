@@ -12,7 +12,7 @@ import LogoutButtonContainer from './user/ui/logoutbutton/LogoutButtonContainer'
 import './css/pure-min.css'
 import './App.css'
 
-import { Layout, Menu, BackTop, Icon } from 'antd';
+import { Layout, Menu, Icon } from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
 
 
