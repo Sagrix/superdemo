@@ -104,7 +104,6 @@ class Forbidden extends Component {
     const columns = this.columns;
     return(
       <div>
-        <h1>Forbidden Individuals</h1>
         <h4>People you do not want to make health care decisions and/or grant access to your data on your behalf.</h4>  
         <Button className="editable-add-btn" onClick={this.handleAdd}>Add</Button>
         <br/><br/>

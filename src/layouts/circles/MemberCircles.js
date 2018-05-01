@@ -104,7 +104,6 @@ class MemberCircles extends Component {
     const columns = this.columns;
     return(
       <div>
-        <h1>Participating Circles</h1>
         <h4>People who have entrusted you as their substitute decision maker.</h4> 
         <Button className="editable-add-btn" onClick={this.handleJoin}>Join</Button>
         <br/><br/>

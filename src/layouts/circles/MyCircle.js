@@ -106,7 +106,6 @@ class MyCircle extends Component {
     const columns = this.columns;
     return(
       <div>
-        <h1>My Circle</h1>
         <h4>People you trust as substitute decision makers of your health care choices and data.</h4>  
         <Button className="editable-add-btn" onClick={this.handleAdd}>Add</Button>
         <br/><br/>
