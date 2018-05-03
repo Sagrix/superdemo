@@ -124,7 +124,7 @@ class App extends Component {
             </div>
           </Content>
         
-          <Footer style={{ textAlign: 'center', background: '#fff' }}>
+          <Footer style={{ textAlign: 'center', background: '#fff', paddingTop: 10 }}>
             Sagrix dAHD ©2018 Created by Sagrix
           </Footer>
         </Layout>
