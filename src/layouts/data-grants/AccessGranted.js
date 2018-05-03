@@ -10,7 +10,7 @@ for (let i = 0; i < 6; i++) {
     key: i.toString(),
     name: `Edrward ${i}`,
     address: `London Park no. ${i}`,
-    duration: `${Math.round(30 - (Math.random()+i))} days`,
+    duration: `${Math.round(30 - (Math.random()+i))} days left`,
   });
 }
 
