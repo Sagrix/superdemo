@@ -1,5 +1,9 @@
+import SimpleAHDContract from '../../../build/contracts/SimpleAHD.json'
+import store from '../../store'
+const contract = require('truffle-contract')
+
 import React, { Component } from 'react'
-import { Row, Col, Divider, Form, InputNumber, Button, Radio } from 'antd'
+import { Row, Col, Divider, Form, InputNumber, Button, Radio, notification, Icon } from 'antd'
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 
@@ -9,11 +13,80 @@ class Preferences extends Component {
   constructor(props, { authData }) {
     super(props)
     authData = this.props
+
+    this.state = {
+      simpleAHDInstance: null
+    }
+
+
+    this.instantiateContract = this.instantiateContract.bind(this)
+    this.onChange = this.onChange.bind(this)
+    this.getRequiredVotes = this.getRequiredVotes.bind(this)
+  }
+
+  componentWillMount() {
+    this.instantiateContract()
+  }
+
+  instantiateContract() {
+    this.web3 = store.getState().web3.web3Instance
+
+    const simpleAHD = contract(SimpleAHDContract)
+    simpleAHD.setProvider(this.web3.currentProvider)
+    let simpleAHDInstance
+
+    this.web3.eth.getCoinbase((error, coinbase) => {
+      // Log errors, if any.
+      if (error) {
+        console.error(error);
+      }
+
+      this.setState({account: coinbase})
+      console.log(this.state.account)
+
+      simpleAHD.deployed().then(function(instance) {
+        // console.log(instance)
+        this.setState({simpleAHDInstance: instance})
+        // console.log(this.state.simpleAHDInstance)
+        // simpleAHDInstance = instance
+        // console.log(simpleAHDInstance)
+
+        this.state.simpleAHDInstance.getRequiredVotes({from: coinbase})
+        .then((result) => {
+          console.log(result['c'][0])
+          // return result['c'][0]
+          this.setState({requiredVotes: result['c'][0]})
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      }.bind(this))
+
+    })
+
+    // this.setState({simpleAHDInstance: instance})
   }
 
   onChange(value) {
-    console.log('changed', value);
-    // call smart contract function- setRequiredVotes
+    this.setState({selectedVotes: value})
+  }
+
+  getRequiredVotes() {
+    return this.state.requiredVotes
+  }
+
+  setRequiredVotes(e) {
+    e.preventDefault()
+
+    this.state.simpleAHDInstance.setRequiredVotes(this.state.selectedVotes, {from: this.state.account})
+        .then((result) => {
+          console.log(result)
+          notification.open({
+            message: 'Required Votes Updated',
+            description: 'Your preference has now been updated.',
+            icon: <Icon type="check-circle" style={{ color: '#108ee9' }} />,
+          });
+        })
   }
   
 
@@ -26,9 +99,9 @@ class Preferences extends Component {
           
           <Divider />
 
-          <Form layout="inline">
+          <Form layout="inline" onSubmit={this.setRequiredVotes.bind(this)}>
             <FormItem label="Min. Votes Required">
-              <InputNumber min={1} max={10} defaultValue={3} onChange={this.onChange} />
+              <InputNumber min={0} max={10} defaultValue={this.state.requiredVotes} onChange={this.onChange} />
             </FormItem>
             <FormItem>
               <Button type="primary" htmlType="submit">Update</Button>
