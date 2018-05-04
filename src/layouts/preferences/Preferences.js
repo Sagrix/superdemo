@@ -8,6 +8,121 @@ const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 
 
+let contractInstance
+let userAccount
+const questions = [
+  'Medical treatment for the primary purpose of research',
+  'Sterilization that is not medically necessary for the protection of my health',
+  'The removal of tissue from my body while I am living for transplantation to another person',
+  'The removal of tissue from my body while I am living for the purpose of medical education or medical research',
+  'Do Not Resuscitate (DNR)'
+]
+
+class PreferenceForm extends Component {
+  constructor(props) {
+    super(props)
+    this.updatePreferences = this.updatePreferences.bind(this)
+  }
+
+  updatePreferences(e) {
+    e.preventDefault()
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values);
+        // console.log(Object.keys(values).map(i => console.log(values[i])))
+        let answers = []
+        for(let i=0; i<questions.length; i++) {
+          let answer = values[`radio-${i}`] === 'yes' ? true : false
+          console.log(answer)
+          answers.push(answer)
+
+          // console.log(values[`radio-${i}`])
+
+          // contractInstance.updatePreference(questions[i], answer, {from: userAccount})
+          // .then(result => {
+          //   console.log(result)
+          //   notification.open({
+          //     message: 'Preferences Updated',
+          //     description: 'Your preferences have now been updated.',
+          //     icon: <Icon type="check-circle" style={{ color: '#108ee9' }} />,
+          //   });
+          // })
+        }
+
+        contractInstance.updateManyPreferences(questions, answers, {from: userAccount})
+          .then(result => {
+            console.log(result)
+            notification.open({
+              message: 'Preferences Updated',
+              description: 'Your preferences have now been updated.',
+              icon: <Icon type="check-circle" style={{ color: '#108ee9' }} />,
+            });
+          })
+      }
+    });
+  }
+
+  render() {
+    const { getFieldDecorator } = this.props.form;
+
+    return (
+      <Form onSubmit={this.updatePreferences}>
+        <FormItem label="1. Medical treatment for the primary purpose of research:">
+          {getFieldDecorator('radio-0')(
+            <RadioGroup>
+              <Radio value="yes">Yes</Radio>
+              <Radio value="no">No</Radio>
+            </RadioGroup>
+          )}
+        </FormItem>
+
+        <FormItem label="2. Sterilization that is not medically necessary for the protection of my health:">
+          {getFieldDecorator('radio-1')(
+            <RadioGroup>
+              <Radio value="yes">Yes</Radio>
+              <Radio value="no">No</Radio>
+            </RadioGroup>
+          )}
+        </FormItem>
+
+        <FormItem label="3. The removal of tissue from my body while I am living for transplantation to another person:">
+          {getFieldDecorator('radio-2')(
+            <RadioGroup>
+              <Radio value="yes">Yes</Radio>
+              <Radio value="no">No</Radio>
+            </RadioGroup>
+          )}
+        </FormItem>
+
+        <FormItem label="4. The removal of tissue from my body while I am living for the purpose of medical education or medical research:">
+          {getFieldDecorator('radio-3')(
+            <RadioGroup>
+              <Radio value="yes">Yes</Radio>
+              <Radio value="no">No</Radio>
+            </RadioGroup>
+          )}
+        </FormItem>
+
+        <FormItem label="5. Do Not Resuscitate (DNR):">
+          {getFieldDecorator('radio-4')(
+            <RadioGroup>
+              <Radio value="yes">Yes</Radio>
+              <Radio value="no">No</Radio>
+            </RadioGroup>
+          )}
+        </FormItem>
+
+        <FormItem>
+          <Button type="primary" htmlType="submit">Update</Button>
+        </FormItem>
+      </Form>
+    );
+  }
+}
+
+
+const WrappedPreferenceForm = Form.create()(PreferenceForm);
+
 class Preferences extends Component {
 
   constructor(props, { authData }) {
@@ -15,7 +130,8 @@ class Preferences extends Component {
     authData = this.props
 
     this.state = {
-      simpleAHDInstance: null
+      simpleAHDInstance: null,
+      preferences: {}
     }
 
 
@@ -43,10 +159,12 @@ class Preferences extends Component {
 
       this.setState({account: coinbase})
       console.log(this.state.account)
+      userAccount = this.state.account
 
       simpleAHD.deployed().then(function(instance) {
         // console.log(instance)
         this.setState({simpleAHDInstance: instance})
+        contractInstance = this.state.simpleAHDInstance
         // console.log(this.state.simpleAHDInstance)
         // simpleAHDInstance = instance
         // console.log(simpleAHDInstance)
@@ -83,14 +201,25 @@ class Preferences extends Component {
           console.log(result)
           notification.open({
             message: 'Required Votes Updated',
-            description: 'Your preference has now been updated.',
+            description: 'Minimum required number of votes has now been updated.',
             icon: <Icon type="check-circle" style={{ color: '#108ee9' }} />,
           });
         })
   }
+
+  // updatePreferences(e) {
+  //   e.preventDefault()
+  //   this.props.form.validateFields((err, values) => {
+  //     if (!err) {
+  //       console.log('Received values of form: ', values);
+  //     }
+  //   });
+  // }
   
 
   render() {
+    // const { getFieldDecorator } = this.props.form;
+    
     return(
       <Row>
         <Col span={12} offset={6}>
@@ -114,47 +243,7 @@ class Preferences extends Component {
 
           {/* <h3>I consent to</h3> */}
 
-          <Form>
-            <FormItem label="Medical treatment for the primary purpose of research:">
-              <RadioGroup>
-                <Radio value="yes">Yes</Radio>
-                <Radio value="no">No</Radio>
-              </RadioGroup>
-            </FormItem>
-
-            <FormItem label="Sterilization that is not medically necessary for the protection of my health:">
-              <RadioGroup>
-                <Radio value="yes">Yes</Radio>
-                <Radio value="no">No</Radio>
-              </RadioGroup>
-            </FormItem>
-
-            <FormItem label="The removal of tissue from my body while I am living for transplantation to another person:">
-              <RadioGroup>
-                <Radio value="yes">Yes</Radio>
-                <Radio value="no">No</Radio>
-              </RadioGroup>
-            </FormItem>
-
-            <FormItem label="The removal of tissue from my body while I am living for the purpose of medical education or
-medical research:">
-              <RadioGroup>
-                <Radio value="yes">Yes</Radio>
-                <Radio value="no">No</Radio>
-              </RadioGroup>
-            </FormItem>
-
-            <FormItem label="Do Not Resuscitate (DNR):">
-              <RadioGroup>
-                <Radio value="yes">Yes</Radio>
-                <Radio value="no">No</Radio>
-              </RadioGroup>
-            </FormItem>
-
-            <FormItem>
-              <Button type="primary" htmlType="submit">Update</Button>
-            </FormItem>
-          </Form>
+          <WrappedPreferenceForm />
 
         </Col>
       </Row>
