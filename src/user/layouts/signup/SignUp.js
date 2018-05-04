@@ -7,7 +7,7 @@ class SignUp extends Component {
     return(
       <Row justify="center">
         <Col span={12} offset={6}>
-          <h1>Sign Up</h1>
+          <h1>Register</h1>
           <p>We've got your wallet information, simply input your full name to create an account. No passwords needed here!</p>
           <SignUpFormContainer />
         </Col>
