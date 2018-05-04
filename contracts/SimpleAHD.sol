@@ -79,11 +79,23 @@ contract SimpleAHD {
     return true;
   }
 
-  function updatePreference(bytes32 question, bool answer) public onlyRegistered returns(bool) {
+  function updateSinglePreference(bytes32 question, bool answer) public onlyRegistered returns(bool) {
     // require(patients[msg.sender].preferences[question] != answer);
     patients[msg.sender].preferences[question] = answer;
     patients[msg.sender].preferenceIndex.push(question);
     emit UpdatedPreference(msg.sender, question, answer);
+    return true;
+  }
+
+
+  function updateManyPreferences(bytes32[] questions, bool[] answers) public onlyRegistered returns(bool) {
+    // require(patients[msg.sender].preferences[question] != answer);
+    for(uint i = 0; i < questions.length; i++) {
+      // patients[msg.sender].preferences[questions[i]] = answers[i];
+      // patients[msg.sender].preferenceIndex.push(questions[i]);
+      updateSinglePreference(questions[i], answers[i]);
+      // emit UpdatedPreference(msg.sender, questions[i], answers[i]);
+    }
     return true;
   }
 
