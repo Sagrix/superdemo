@@ -17,12 +17,27 @@ const questions = [
   'The removal of tissue from my body while I am living for the purpose of medical education or medical research',
   'Do Not Resuscitate (DNR)'
 ]
+// let initialAnswers = []
 
 class PreferenceForm extends Component {
   constructor(props) {
     super(props)
     this.updatePreferences = this.updatePreferences.bind(this)
   }
+
+  /*componentDidMount() {
+    this.setInitialValues()
+  }
+
+  setInitialValues() {
+    for(let i=0; i<questions.length; i++) {
+      contractInstance.viewPreference(questions[i], {from: userAccount})
+      .then(result => {
+        console.log(result)
+  
+      })
+    }
+  }*/
 
   updatePreferences(e) {
     e.preventDefault()
@@ -39,7 +54,7 @@ class PreferenceForm extends Component {
           // console.log(values[`radio-${i}`])
 
           // contractInstance.updatePreference(questions[i], answer, {from: userAccount})
-          // .then(result => {
+          // .then(result => { 
           //   console.log(result)
           //   notification.open({
           //     message: 'Preferences Updated',

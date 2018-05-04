@@ -104,10 +104,14 @@ contract SimpleAHD {
     return patients[msg.sender].preferences[question];
   }
 
-  function viewAllPreferences() public onlyRegistered returns(bytes32[]) {
+  /*function viewAllPreferences() public onlyRegistered returns(bytes32[], bool[]) {
     emit ViewedPreferences(msg.sender, msg.sender);
-    return patients[msg.sender].preferenceIndex;
-  }
+    bool[] memory answers = new bool[](patients[msg.sender].preferenceIndex.length);
+    for(uint i = 0; i < patients[msg.sender].preferenceIndex.length; i++) {
+      answers[i] = patients[msg.sender].preferences[patients[msg.sender].preferenceIndex[i]];
+    }
+    return (patients[msg.sender].preferenceIndex, answers);
+  }*/
 
   function viewPreferenceAsProxy(address other, bytes32 question)
   public onlyRegistered onlyGranted(other) returns(bool) {
