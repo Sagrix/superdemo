@@ -83,15 +83,10 @@ code {
 }
 
 .logo {
-  /* width: 120px;
-  height: 31px;
-  background: rgba(255,255,255,.2);
-  background: url('/public/logo-full.png');  
-  margin: 16px 24px 16px 0;
-  float: left; */
-  height: 32px;
-  background: rgba(255,255,255,.2);
-  margin: 16px;
+  width: 50px;
+  /* background-image: url('/logo.png');   */
+  height: 60px;
+  margin-left: 10px;
 }
 
 .trigger {

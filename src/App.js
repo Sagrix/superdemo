@@ -105,7 +105,8 @@ class App extends Component {
         <Sider trigger={null} breakpoint="lg" collapsible collapsed={this.state.collapsed}
           // onCollapse={(collapsed, type) => { console.log(collapsed, type); }}
         >
-          <div className="logo" />
+          {/* <div className="logo" /> */}
+          <img src="/logo.png" className="logo" />
           <OnlyAuthLinks />
           <OnlyGuestLinks />
         </Sider>
