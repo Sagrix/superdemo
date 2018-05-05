@@ -10,12 +10,11 @@ import CircleModal from '../../user/ui/inputmodals/CircleModal'
 
 class MyCircle extends Component {
 
-  constructor(props, { authData }) {
+  constructor(props) {
     super(props)
-    authData = this.props
 
     // this.web3 = store.getState().web3.web3Instance
-    
+
     this.columns = 
     [{
       title: 'Name',
@@ -29,9 +28,6 @@ class MyCircle extends Component {
       ),
     }, {
       title: 'Address',
-      dataIndex: 'age',
-    }, {
-      title: 'Date Added',
       dataIndex: 'address',
     }, {
       title: 'Action',
@@ -49,25 +45,17 @@ class MyCircle extends Component {
     }];
 
     this.state = {
-      dataSource: [{
-        key: '0',
-        name: 'Edward King 0',
-        age: '32',
-        address: 'London, Park Lane no. 0',
-      }, {
-        key: '1',
-        name: 'Edward King 1',
-        age: '32',
-        address: 'London, Park Lane no. 1',
-      }],
+      dataSource: [],
       count: 2,
     };
   }
 
-  fetchData = () => {
-    let circleData;
-    // TODO
-    this.setState({dataSource: circleData})
+  componentWillMount() {
+    this.fetchCircleMembers()
+  }
+
+  fetchCircleMembers() {
+    this.setState({dataSource: this.props.circleData})
   }
 
   onCellChange = (key, dataIndex) => {

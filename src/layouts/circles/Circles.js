@@ -59,8 +59,18 @@ class Circles extends Component {
         contractInstance.getCircleMembers({from: coinbase})
         .then((result) => {
           console.log(result)
+          let names = result[0]
+          let addresses = result[1]
+          let circleInfo = []
+          for(let i = 0; i< names.length; i++) {
+            circleInfo.push[{
+              key: i,
+              name: names[i],
+              address: addresses[i]
+            }]
+          }
           // return result['c'][0]
-          // this.setState({myCircle: result['c'][0]})
+          this.setState({myCircleInfo: circleInfo})
         })
         .catch((error) => {
           console.log(error)
@@ -81,7 +91,7 @@ class Circles extends Component {
             tab={<span><Icon type="heart" />My Circle</span>} 
             key="1"
           >
-           <MyCircle />
+           <MyCircle circleData={this.state.myCircleInfo} handleAdd hadleRemove />
           </TabPane>
 
           <TabPane 
