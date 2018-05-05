@@ -10,6 +10,7 @@ contract SimpleAHD {
     uint requiredVotes;
     bytes32[] preferenceIndex;
     mapping(bytes32 => bool) preferences;
+    address[] circleIndex;
     mapping(address => bool) circle;
     mapping(address => uint) accessTime;
   }
@@ -67,6 +68,7 @@ contract SimpleAHD {
     require(isRegistered(other));
     require(patients[msg.sender].circle[other] == false);
     patients[msg.sender].circle[other] = true;
+    patients[msg.sender].circleIndex.push(other);
     emit AddedToCircle(msg.sender, other);
     return true;
   }
@@ -75,8 +77,26 @@ contract SimpleAHD {
     require(isRegistered(other));
     require(patients[msg.sender].circle[other] == true);
     patients[msg.sender].circle[other] = false;
-    emit RemovedFromCircle(msg.sender, other);
-    return true;
+    for(uint i = 0; i < patients[msg.sender].circleIndex.length; i++) {
+      if(patients[msg.sender].circleIndex[i] == other) {
+        delete patients[msg.sender].circleIndex[i];
+        emit RemovedFromCircle(msg.sender, other);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function getCircleMembers() public view onlyRegistered returns(bytes32[], address[]) {
+    uint n = patients[msg.sender].circleIndex.length;
+    bytes32[] memory names = new bytes32[](n);
+    address[] memory addresses = new address[](n);
+
+    for(uint i = 0; i < n; i++) {
+      names[i] = patients[msg.sender].name;
+      addresses[i] = patients[msg.sender].circleIndex[i];
+    }
+    return (names, addresses);
   }
 
   function updateSinglePreference(bytes32 question, bool answer) public onlyRegistered returns(bool) {
@@ -104,7 +124,7 @@ contract SimpleAHD {
     return patients[msg.sender].preferences[question];
   }
 
-  /*function viewAllPreferences() public onlyRegistered returns(bytes32[], bool[]) {
+  /*function viewAllPreferences() public view onlyRegistered returns(bytes32[], bool[]) {
     emit ViewedPreferences(msg.sender, msg.sender);
     bool[] memory answers = new bool[](patients[msg.sender].preferenceIndex.length);
     for(uint i = 0; i < patients[msg.sender].preferenceIndex.length; i++) {
