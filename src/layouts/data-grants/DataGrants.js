@@ -73,7 +73,7 @@ class DataGrants extends Component {
       this.updateAccessList()
       notification.open({
         message: 'Granted Access',
-        description: `${name} has now been granted data access for ${duration} days.`,
+        description: `${name} has now been granted data access to your data.`,
         icon: <Icon type="check-circle" style={{ color: '#108ee9' }} />,
       });
     })
