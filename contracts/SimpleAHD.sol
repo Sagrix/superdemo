@@ -152,6 +152,7 @@ contract SimpleAHD {
     require(isRegistered(other));
     if (patients[msg.sender].accessTime[other] == endTime) return false;
     patients[msg.sender].accessTime[other] = endTime;
+    patients[msg.sender].accessIndex.push(other);
     emit GrantedDataAccess(msg.sender, other, endTime);
     return true;
   }
@@ -160,8 +161,13 @@ contract SimpleAHD {
     require(isRegistered(other));
     if (patients[msg.sender].accessTime[other] == 0) return false;
     patients[msg.sender].accessTime[other] = 0;
-    emit RevokedDataAccess(msg.sender, other);
-    return true;
+    for(uint i = 0; i < patients[msg.sender].accessIndex.length; i++) {
+      if(patients[msg.sender].accessIndex[i] == other) {
+        delete patients[msg.sender].accessIndex[i];
+        emit RemovedFromCircle(msg.sender, other);
+        return true;
+      }
+    }
   }
 
   function grantDataAccessAsProxy(address other, address requester, uint endTime) 
