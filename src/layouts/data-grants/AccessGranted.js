@@ -5,14 +5,14 @@ const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 const FormItem = Form.Item;
 
 const data = [];
-for (let i = 0; i < 6; i++) {
-  data.push({
-    key: i.toString(),
-    name: `Edrward ${i}`,
-    address: `London Park no. ${i}`,
-    duration: `${Math.round(30 - (Math.random()+i))} days left`,
-  });
-}
+// for (let i = 0; i < 6; i++) {
+//   data.push({
+//     key: i.toString(),
+//     name: `Edrward ${i}`,
+//     address: `London Park no. ${i}`,
+//     duration: `${Math.round(30 - (Math.random()+i))} days left`,
+//   });
+// }
 
 
 export default class AccessGranted extends Component {
@@ -55,8 +55,9 @@ export default class AccessGranted extends Component {
         );
       },
     }];
-    this.state = { data }
-    this.cacheData = data.map(item => ({ ...item }))
+    this.state = { data: props.accessList }
+    // this.setState({data: props.accessList})
+    // this.cacheData = data.map(item => ({ ...item }))
   }
 
 
@@ -112,7 +113,7 @@ export default class AccessGranted extends Component {
     return (
       <div>
         <h4>People you've granted access to view your personal health care data.</h4>
-        <Button className="editable-add-btn" onClick={this.handleAdd}>Add</Button>
+        <Button className="editable-add-btn" onClick={this.props.handleAdd}>Add</Button>
         <br/><br/>
         <Table bordered dataSource={this.state.data} columns={this.columns} />
       </div>

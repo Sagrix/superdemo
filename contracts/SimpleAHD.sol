@@ -12,6 +12,7 @@ contract SimpleAHD {
     mapping(bytes32 => bool) preferences;
     address[] circleIndex;
     mapping(address => bool) circle;
+    address[] accessIndex;
     mapping(address => uint) accessTime;
   }
 
@@ -175,6 +176,20 @@ contract SimpleAHD {
     require(isRegistered(other));
     patients[other].accessTime[requester] = 0;
     emit RevokedDataAccess(msg.sender, requester);
+  }
+
+  function getGrantedUsers() public view onlyRegistered returns(bytes32[], address[], uint[]) {
+    uint n = patients[msg.sender].accessIndex.length;
+    bytes32[] memory names = new bytes32[](n);
+    address[] memory addresses = new address[](n);
+    uint[] memory durations = new uint[](n);
+
+    for(uint i = 0; i < n; i++) {
+      addresses[i] = patients[msg.sender].accessIndex[i];
+      names[i] = patients[addresses[i]].name;
+      durations[i] = patients[msg.sender].accessTime[addresses[i]];
+    }
+    return (names, addresses, durations);
   }
 
 }
