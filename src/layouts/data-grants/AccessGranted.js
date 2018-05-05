@@ -30,7 +30,7 @@ export default class AccessGranted extends Component {
       width: '40%',
       render: (text, record) => this.renderColumns(text, record, 'address'),
     }, {
-      title: 'Duration',
+      title: 'Expires On',
       dataIndex: 'duration',
       width: '15%',
       render: (text, record) => this.renderColumns(text, record, 'duration'),
@@ -60,6 +60,17 @@ export default class AccessGranted extends Component {
     // this.cacheData = data.map(item => ({ ...item }))
   }
 
+  componentWillMount() {
+    this.fetchAccessList()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({data: nextProps.accessList})
+  }
+
+  fetchAccessList = () => {
+    this.setState({data: this.props.accessList})
+  }
 
   renderColumns(text, record, column) {
     return (

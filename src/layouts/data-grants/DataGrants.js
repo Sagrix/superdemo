@@ -1,6 +1,6 @@
 import SimpleAHDContract from '../../../build/contracts/SimpleAHD.json'
 import store from '../../store'
-const contract = require('truffle-contract')
+const contract = require('truffle-contract');
 
 import React, { Component } from 'react'
 import { Tabs, Icon, notification } from 'antd'
@@ -10,6 +10,10 @@ import AccessGranted from './AccessGranted'
 import AccessExpired from './AccessExpired'
 import AccessRevoked from './AccessRevoked'
 import DataGrantModal from '../../user/ui/inputmodals/DataGrantModal'
+
+import moment from 'moment'
+import 'moment/locale/en-ca'
+moment.locale('en-ca');
 
 
 let contractInstance
@@ -88,13 +92,14 @@ class DataGrants extends Component {
       let addresses = result[1]
       let durations = result[2]
       let accessInfo = []
-      for(let i = 0; i< names.length; i++) {
+      for(let i = 0; i < names.length; i++) {
         if(addresses[i] !== "0x0000000000000000000000000000000000000000") {
+          let expiryDate = moment.unix(durations[i]['c'][0]).format('LL')
           accessInfo.push({
             key: i,
             name: this.web3.toUtf8(names[i]),
             address: addresses[i],
-            duration: durations[i]
+            duration: expiryDate
           })
         }
       }
