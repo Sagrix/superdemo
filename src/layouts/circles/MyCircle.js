@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Table, Button, Popconfirm } from 'antd'
 import EditableCell from './EditableCell'
-import CircleModal from '../../user/ui/inputmodals/CircleModal'
+// import CircleModal from '../../user/ui/inputmodals/CircleModal'
 
 // import SimpleAHDContract from '../../../build/contracts/SimpleAHD.json'
 // import store from '../../store'
@@ -56,6 +56,7 @@ class MyCircle extends Component {
 
   fetchCircleMembers() {
     this.setState({dataSource: this.props.circleData})
+    // console.log(this.state.dataSource)
   }
 
   onCellChange = (key, dataIndex) => {
@@ -74,20 +75,18 @@ class MyCircle extends Component {
     this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
   }
 
-  handleAdd = () => {
-    // return (<CircleModal />);
+  /*handleAdd() {
     const { count, dataSource } = this.state;
     const newData = {
       key: count,
       name: `Edward King ${count}`,
-      age: 32,
       address: `London, Park Lane no. ${count}`,
     };
     this.setState({
       dataSource: [...dataSource, newData],
       count: count + 1,
     });
-  }
+  }*/
 
   render() {
     const { dataSource } = this.state;
@@ -95,7 +94,7 @@ class MyCircle extends Component {
     return(
       <div>
         <h4>People you trust as substitute decision makers of your health care choices and data grants.</h4>  
-        <Button className="editable-add-btn" onClick={this.handleAdd}>Add</Button>
+        <Button className="editable-add-btn" onClick={this.props.handleAdd}>Add</Button>
         <br/><br/>
         <Table bordered dataSource={dataSource} columns={columns} />
       </div>

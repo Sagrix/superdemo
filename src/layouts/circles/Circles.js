@@ -7,6 +7,7 @@ import { Tabs, Icon } from 'antd'
 import MyCircle from './MyCircle'
 import MemberCircles from './MemberCircles'
 import Forbidden from './Forbidden'
+import CircleModal from '../../user/ui/inputmodals/CircleModal'
 const TabPane = Tabs.TabPane;
 
 let contractInstance
@@ -22,10 +23,13 @@ class Circles extends Component {
       simpleAHDInstance: null,
       myCircle: null,
       memberCircles: null,
-      forbidden: null
+      forbidden: null,
+      addModalVisibility: false
     }
 
     this.instantiateContract = this.instantiateContract.bind(this)
+    this.addToCircle = this.addToCircle.bind(this)
+    this.removeFromCircle = this.removeFromCircle.bind(this)
   }
 
   componentWillMount() {
@@ -82,6 +86,24 @@ class Circles extends Component {
     // this.setState({simpleAHDInstance: instance})
   }
 
+  getFormData(name, address) {
+    console.log("circle component: ", address)
+    contractInstance.addToCircle(address, {from: userAccount})
+    .then(result => {
+      console.log(result)
+    })
+    .catch(err => console.log(err))
+  }
+
+  addToCircle(address) {
+    console.log("added: ", address)
+    this.setState({addModalVisibility: true})
+  }
+
+  removeFromCircle(address) {
+    console.log('removed: ', address)
+  }
+
   render() {
     return(
       <div>
@@ -91,7 +113,7 @@ class Circles extends Component {
             tab={<span><Icon type="heart" />My Circle</span>} 
             key="1"
           >
-           <MyCircle circleData={this.state.myCircleInfo} handleAdd hadleRemove />
+           <MyCircle circleData={this.state.myCircleInfo} handleAdd={this.addToCircle} hadleRemove={this.removeFromCircle} />
           </TabPane>
 
           <TabPane 
@@ -108,6 +130,8 @@ class Circles extends Component {
             <Forbidden />
           </TabPane>
         </Tabs>
+
+        <CircleModal visible={this.state.addModalVisibility} getFormData={this.getFormData} />
       </div>
     )
   }
