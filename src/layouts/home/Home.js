@@ -9,7 +9,7 @@ class Home extends Component {
     return (
       <div>
         <h1>dAHD by Sagrix</h1>
-        <h3>Patient empowerment platform for Advance Healthcare Directives</h3>
+        <h3>Patient empowerment platform for Advance Healthcare Directives.</h3>
         <Divider />
         <Row gutter={16}>
           <Col span={8}>
