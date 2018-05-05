@@ -61,12 +61,12 @@ class App extends Component {
           <span>Data Grants</span>
           <Link to="/data-grants"> </Link>
         </Menu.Item>
-        <Menu.Item key="6">
+        {/* <Menu.Item key="6">
           <Icon type="pie-chart" />
           <span>Provenance</span>
           <Link to="/provenance"></Link>
-        </Menu.Item>
-        <Menu.Item key="7">
+        </Menu.Item> */}
+        <Menu.Item key="6">
           <Icon type="logout" />
           <span>Sign out</span>
           <LogoutButtonContainer />

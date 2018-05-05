@@ -50,16 +50,10 @@ class MemberCircles extends Component {
     this.state = {
       dataSource: [{
         key: '0',
-        name: 'Edward King 0',
-        age: '32',
-        address: 'London, Park Lane no. 0',
-      }, {
-        key: '1',
-        name: 'Edward King 1',
-        age: '32',
-        address: 'London, Park Lane no. 1',
+        name: 'Jon Snow',
+        address: '0xbfc06f089811aec1965e862601e18bb1ba26966d',
       }],
-      count: 2,
+      count: 1,
     };
   }
 

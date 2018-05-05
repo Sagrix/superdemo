@@ -28,9 +28,6 @@ class Forbidden extends Component {
       ),
     }, {
       title: 'Address',
-      dataIndex: 'age',
-    }, {
-      title: 'Date Added',
       dataIndex: 'address',
     }, {
       title: 'Action',
@@ -50,14 +47,12 @@ class Forbidden extends Component {
     this.state = {
       dataSource: [{
         key: '0',
-        name: 'Edward King 0',
-        age: '32',
-        address: 'London, Park Lane no. 0',
+        name: 'Edward King',
+        address: '0xfa82ad9a345179a6f7e388dc950406d4daaf3633',
       }, {
         key: '1',
-        name: 'Edward King 1',
-        age: '32',
-        address: 'London, Park Lane no. 1',
+        name: 'Tony Stark',
+        address: '0x8f42089586fd4fa149e799f93a6e66c10d9d8ce5',
       }],
       count: 2,
     };
