@@ -4,14 +4,28 @@ import EditableCell from './EditableCell'
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 const FormItem = Form.Item;
 
-const data = [];
-for (let i = 0; i < 6; i++) {
-  data.push({
-    key: i.toString(),
-    name: `Edrward ${i}`,
-    address: `London Park no. ${i}`
-  });
-}
+
+const data = [
+  {
+    key: 0,
+    name: 'Ryan McDonald',
+    address: '0x3c65d654efe788bfc1298acdbbaef92300aadc46'
+  }, {
+    key: 1,
+    name: 'Pierre Bleu',
+    address: '0xa17592300aadcd65f64264aced2e788bdbbaefe9'
+  }
+];
+
+// for (let i = 0; i < 7; i++) {
+//   data.push({
+//     key: i.toString(),
+//     name: `Edrward ${i}`,
+//     address: `London Park no. ${i}`,
+//     duration: `${Math.round(12 - (Math.random()-i))} days ago`,
+//   });
+// }
+
 
 
 export default class AccessRevoked extends Component {

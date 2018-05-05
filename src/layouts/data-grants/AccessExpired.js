@@ -4,15 +4,33 @@ import EditableCell from './EditableCell'
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 const FormItem = Form.Item;
 
-const data = [];
-for (let i = 0; i < 7; i++) {
-  data.push({
-    key: i.toString(),
-    name: `Edrward ${i}`,
-    address: `London Park no. ${i}`,
-    duration: `${Math.round(12 - (Math.random()-i))} days ago`,
-  });
-}
+const data = [
+  {
+    key: 0,
+    name: 'Rick Strong',
+    address: '0xa165d654efe788bfc1298acdbbaef92300aadc46',
+    duration: '1 month ago'
+  }, {
+    key: 1,
+    name: 'Dr. Lisa Ricardo',
+    address: '0xa16592300aadcd65fc1298ac4efe788bdbbaefe9',
+    duration: '3 hours ago'
+  }, {
+    key: 2,
+    name: 'John Johnson',
+    address: '0xa165900bdbbaefe9a1298acadcd65fc4efe23788',
+    duration: '2 days ago'
+  },
+];
+
+// for (let i = 0; i < 7; i++) {
+//   data.push({
+//     key: i.toString(),
+//     name: `Edrward ${i}`,
+//     address: `London Park no. ${i}`,
+//     duration: `${Math.round(12 - (Math.random()-i))} days ago`,
+//   });
+// }
 
 
 export default class AccessExpired extends Component {
@@ -30,7 +48,7 @@ export default class AccessExpired extends Component {
       width: '40%',
       render: (text, record) => this.renderColumns(text, record, 'address'),
     }, {
-      title: 'Duration',
+      title: 'Expired',
       dataIndex: 'duration',
       width: '15%',
       render: (text, record) => this.renderColumns(text, record, 'duration'),

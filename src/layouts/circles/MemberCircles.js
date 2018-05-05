@@ -37,7 +37,7 @@ class MemberCircles extends Component {
       dataIndex: 'action',
       render: (text, record) => {
         return (
-          this.state.dataSource.length > 1 ?
+          this.state.dataSource.length > 0 ?
           (
             <Popconfirm title="Are you sure?" onConfirm={() => this.onDelete(record.key)}>
               <a href="javascript:;">Leave</a>
