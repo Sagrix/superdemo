@@ -36,9 +36,9 @@ class MyCircle extends Component {
         return (
           this.state.dataSource.length > 0 ?
           (
-            <Popconfirm title="Are you sure?" onConfirm={() => this.onDelete(record.key)}>
-              <a href="javascript:;">Remove</a>
-            </Popconfirm>
+          <Popconfirm title="Are you sure?" onConfirm={() => this.onDelete(record.key, record.name, record.address)}>
+            <a href="javascript:;">Remove</a>
+          </Popconfirm>
           ) : null
         );
       },
@@ -74,9 +74,11 @@ class MyCircle extends Component {
     };
   }
 
-  onDelete = (key) => {
-    const dataSource = [...this.state.dataSource];
-    this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
+  onDelete = (key, name, address) => {
+    console.log(key,":",name,":",address)
+    this.props.handleRemove(name, address)
+    // const dataSource = [...this.state.dataSource];
+    // this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
   }
 
   /*handleAdd() {

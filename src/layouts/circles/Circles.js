@@ -113,11 +113,13 @@ class Circles extends Component {
       let addresses = result[1]
       let circleInfo = []
       for(let i = 0; i< names.length; i++) {
-        circleInfo.push({
-          key: i,
-          name: this.web3.toUtf8(names[i]),
-          address: addresses[i]
-        })
+        if(addresses[i] !== "0x0000000000000000000000000000000000000000") {
+          circleInfo.push({
+            key: i,
+            name: this.web3.toUtf8(names[i]),
+            address: addresses[i]
+          })
+        }
       }
       // return result['c'][0]
       // console.log(circleInfo)
@@ -132,8 +134,19 @@ class Circles extends Component {
     this.setState({addModalVisibility: true})
   }
 
-  removeFromCircle(address) {
-    console.log('removed: ', address)
+  removeFromCircle(name, address) {
+    contractInstance.removeFromCircle(address, {from: userAccount})
+    .then(result => {
+      console.log('removed: ', address)
+      console.log(result)
+      // this.updateCircleMembers()
+      notification.open({
+        message: 'Circle Updated',
+        description: `${name} has now been removed from your circle.`,
+        icon: <Icon type="check-circle" style={{ color: '#108ee9' }} />,
+      });
+    })
+    .catch(error => console.log(error))
   }
 
   render() {
@@ -145,7 +158,7 @@ class Circles extends Component {
             tab={<span><Icon type="heart" />My Circle</span>} 
             key="1"
           >
-           <MyCircle circleData={this.state.myCircleInfo} handleAdd={this.addToCircle} hadleRemove={this.removeFromCircle} />
+           <MyCircle circleData={this.state.myCircleInfo} handleAdd={this.addToCircle} handleRemove={this.removeFromCircle} />
           </TabPane>
 
           <TabPane 
