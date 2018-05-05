@@ -93,8 +93,8 @@ contract SimpleAHD {
     address[] memory addresses = new address[](n);
 
     for(uint i = 0; i < n; i++) {
-      names[i] = patients[msg.sender].name;
       addresses[i] = patients[msg.sender].circleIndex[i];
+      names[i] = patients[addresses[i]].name;
     }
     return (names, addresses);
   }
