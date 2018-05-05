@@ -67,14 +67,16 @@ class Circles extends Component {
           let addresses = result[1]
           let circleInfo = []
           for(let i = 0; i< names.length; i++) {
-            circleInfo.push[{
+            circleInfo.push({
               key: i,
-              name: names[i],
+              name: this.web3.toUtf8(names[i]),
               address: addresses[i]
-            }]
+            })
           }
           // return result['c'][0]
+          // console.log(circleInfo)
           this.setState({myCircleInfo: circleInfo})
+          // console.log(this.state.myCircleInfo)
         })
         .catch((error) => {
           console.log(error)
